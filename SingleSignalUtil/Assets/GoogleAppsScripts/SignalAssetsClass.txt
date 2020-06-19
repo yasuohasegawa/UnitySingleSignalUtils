@@ -1,0 +1,75 @@
+function folderExists(folderName) {
+  var folders = DriveApp.getFoldersByName(folderName);
+  while(folders.hasNext()) {
+    var folder = folders.next();
+    if(folder.getName() == folderName){
+      return folder;
+    }
+  }
+  
+  return null;
+}
+
+function fileExists(folder,fileName) {
+  var files = folder.getFilesByName(fileName);
+  
+  while (files.hasNext()) {
+    var file = files.next();
+    if(fileName == file.getName()) {
+      return file;
+    }
+  }
+  
+  return null;
+}
+
+function outSignalClass() {
+  var rowIndex = 1;
+  var colStartIndex = 1;
+  var rowNum = 1;
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var lastRow = sheet.getLastRow();
+  var className = sheet.getName(); // use sheet name as class name
+  
+  var str = `
+using UnityEngine.Timeline;
+
+`;
+  
+  str += 'public class '+className+' : SignalAsset {\n'
+  str += '\t public enum '+className+'ID {\n';
+  
+  for(rowIndex; rowIndex<=lastRow; rowIndex++) {
+    var range = sheet.getRange(rowIndex, colStartIndex, rowNum, sheet.getLastColumn());
+    var values = range.getValues();
+    var signal = values[0][0];
+    var newLine = (rowIndex != lastRow)?',\n':'\n';
+    str += '\t\t'+signal+newLine;
+    //Logger.log(values[0][0]);
+  }
+  str += '\t }\n';
+  str += '\t public '+className+'ID SignalID;\n\n';
+  str += '\t public string[] GetSignalEnums() {\n';
+  str += '\t\t string[] typeNames = System.Enum.GetNames(typeof('+className+'ID));\n';
+  str += '\t\t return typeNames;\n';
+  str += '\t }\n\n';
+  str += '\t public '+className+'ID GetSignalEnum(string enumVal){\n';
+  str += '\t\t TestSignalID e = ('+className+'ID)System.Enum.Parse(typeof('+className+'ID), enumVal);\n';
+  str += '\t\t return e;\n';
+  str += '\t }\n\n';
+  str += '\t public void SetSignalEnum('+className+'ID enumVal){\n';
+  str += '\t\t SignalID = enumVal;\n';
+  str += '\t }\n\n';
+  str += '}\n';
+  
+  var folderName = "UnitySignal";
+  var existedFolder = folderExists(folderName);
+  var outputFolder = (existedFolder == null)?DriveApp.createFolder(folderName):existedFolder;
+  
+  var file = fileExists(outputFolder,className);
+  if(file == null) {
+    outputFolder.createFile(className, str, MimeType.PLAIN_TEXT);
+  } else {
+    file.setContent(str);
+  }
+}
