@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.IO;
 
-public class ScriptableObjectToAsset : EditorWindow
+public class SignalObjectToAsset : EditorWindow
 {
 	private static string m_signalOutPath = "Assets/Resources"; // you can modefy an initial path.
 
@@ -53,7 +53,7 @@ public class ScriptableObjectToAsset : EditorWindow
 	[MenuItem("SingleSignal/GenerateSignals")]
     static void ShowWindow()
 	{
-		EditorWindow.GetWindow<ScriptableObjectToAsset>();
+		EditorWindow.GetWindow<SignalObjectToAsset>();
 	}
 
 	public static System.Type GetTypeByClassName(string className)
