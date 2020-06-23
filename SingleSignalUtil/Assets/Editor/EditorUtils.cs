@@ -6,23 +6,6 @@ using System.IO;
 
 public class EditorUtils
 {
-	public static string GetSavePath(Object selectedObject)
-	{
-		string objectName = selectedObject.name;
-		string dirPath = Path.GetDirectoryName(AssetDatabase.GetAssetPath(selectedObject));
-		string path = string.Format("{0}/{1}", dirPath, objectName);
-
-		if (File.Exists(path))
-			for (int i = 1; ; i++)
-			{
-				path = string.Format("{0}/{1}({2})", dirPath, objectName, i);
-				if (!File.Exists(path))
-					break;
-			}
-
-		return path;
-	}
-
 	public static void GetUnityObjectsOfTypeFromPath<T>(string path, List<T> assetsFound)
 	{
 		string[] filePaths = System.IO.Directory.GetFiles(path);
