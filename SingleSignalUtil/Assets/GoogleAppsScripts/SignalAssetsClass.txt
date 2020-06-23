@@ -1,3 +1,5 @@
+var folderName = "UnitySignal";
+
 function folderExists(folderName) {
   var folders = DriveApp.getFoldersByName(folderName);
   while(folders.hasNext()) {
@@ -95,19 +97,6 @@ using UnityEngine.Timeline;
   
   jsonStr+=']}\n'
   
-  var folderName = "UnitySignal";
-  var existedFolder = folderExists(folderName);
-  var outputFolder = (existedFolder == null)?DriveApp.createFolder(folderName):existedFolder;
-  
-  var file = fileExists(outputFolder,className);
-  if(file == null) {
-    outputFolder.createFile(className, str, MimeType.PLAIN_TEXT);
-  } else {
-    file.setContent(str);
-  }
-  
-  outFile("UnitySignal",className, str);
-  outFile("UnitySignal",className+".json", jsonStr);
+  outFile(folderName,className, str);
+  outFile(folderName,className+".json", jsonStr);
 }
-
-
