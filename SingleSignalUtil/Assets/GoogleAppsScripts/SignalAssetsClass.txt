@@ -23,8 +23,20 @@ function fileExists(folder,fileName) {
   return null;
 }
 
+function outFile(folderName, filename, str) {
+  var existedFolder = folderExists(folderName);
+  var outputFolder = (existedFolder == null)?DriveApp.createFolder(folderName):existedFolder;
+  
+  var file = fileExists(outputFolder,filename);
+  if(file == null) {
+    outputFolder.createFile(filename, str, MimeType.PLAIN_TEXT);
+  } else {
+    file.setContent(str);
+  }
+}
+
 function outSignalClass() {
-  var rowIndex = 1;
+  var rowIndex = 2;
   var colStartIndex = 1;
   var rowNum = 1;
   var sheet = SpreadsheetApp.getActiveSheet();
@@ -32,19 +44,38 @@ function outSignalClass() {
   var className = sheet.getName(); // use sheet name as class name
   
   var str = `
+using UnityEngine;
 using UnityEngine.Timeline;
 
+[CreateAssetMenu(menuName = "SingleSignal/CreateSignal")]
 `;
+  
+  var jsonStr = '{"signals":[ \n';
   
   str += 'public class '+className+' : SignalAsset {\n'
   str += '\t public enum '+className+'ID {\n';
   
+  var jsonLabels = ["signalID","time","functionName"];
   for(rowIndex; rowIndex<=lastRow; rowIndex++) {
     var range = sheet.getRange(rowIndex, colStartIndex, rowNum, sheet.getLastColumn());
     var values = range.getValues();
     var signal = values[0][0];
     var newLine = (rowIndex != lastRow)?',\n':'\n';
     str += '\t\t'+signal+newLine;
+    
+    var line = values[0];
+    jsonStr+='{\n';
+    for(var j = 0; j<line.length; j++) {
+      var newLine2 = (j != line.length-1)?',\n':'\n';
+      var lb = jsonLabels[j];
+      var val = line[j];
+      if(lb == "time"){
+        jsonStr+='"'+lb+'":'+val+''+newLine2;
+      } else {
+        jsonStr+='"'+lb+'":"'+val+'"'+newLine2;
+      }
+    }
+    jsonStr+='}'+newLine;
     //Logger.log(values[0][0]);
   }
   str += '\t }\n';
@@ -62,6 +93,8 @@ using UnityEngine.Timeline;
   str += '\t }\n\n';
   str += '}\n';
   
+  jsonStr+=']}\n'
+  
   var folderName = "UnitySignal";
   var existedFolder = folderExists(folderName);
   var outputFolder = (existedFolder == null)?DriveApp.createFolder(folderName):existedFolder;
@@ -72,4 +105,9 @@ using UnityEngine.Timeline;
   } else {
     file.setContent(str);
   }
+  
+  outFile("UnitySignal",className, str);
+  outFile("UnitySignal",className+".json", jsonStr);
 }
+
+

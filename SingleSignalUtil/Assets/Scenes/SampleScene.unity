@@ -173,6 +173,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 79fbd94f81aee452986fcce0100f9b91, type: 2}
     - {fileID: 11400000, guid: dfae7dfd92f7e4edb8c41de3565e784e, type: 2}
     - {fileID: 11400000, guid: 5fb97189bf7b54847a8e8c26e798ef34, type: 2}
+    - {fileID: 11400000, guid: a42469c32c71743d7b6d0d66c225029b, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -244,6 +245,20 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 1
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 539111654}
+          m_MethodName: _OnSignal
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 11400000, guid: a42469c32c71743d7b6d0d66c225029b,
+              type: 2}
+            m_ObjectArgumentAssemblyTypeName: TestSignal, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1
 --- !u!320 &539111653
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -253,13 +268,17 @@ PlayableDirector:
   m_GameObject: {fileID: 539111650}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 4f7efc257a90b4bdbab6db0e0738b7df, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: e59c120f359e0436e8bcedb3a9e7787d, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
   - key: {fileID: -8492262005529413213, guid: 4f7efc257a90b4bdbab6db0e0738b7df, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 0}
+    value: {fileID: 0}
+  - key: {fileID: 6460921043902771297, guid: e59c120f359e0436e8bcedb3a9e7787d, type: 2}
     value: {fileID: 539111652}
   m_ExposedReferences:
     m_References: []

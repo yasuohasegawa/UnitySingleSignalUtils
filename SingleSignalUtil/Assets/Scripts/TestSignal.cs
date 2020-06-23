@@ -1,6 +1,8 @@
 
+using UnityEngine;
 using UnityEngine.Timeline;
 
+[CreateAssetMenu(menuName = "SingleSignal/CreateSignal")]
 public class TestSignal : SignalAsset {
 	 public enum TestSignalID {
 		StartAnimation,
