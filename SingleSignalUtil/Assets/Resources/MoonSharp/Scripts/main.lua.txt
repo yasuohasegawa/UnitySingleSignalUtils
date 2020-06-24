@@ -1,0 +1,34 @@
+count = 0
+
+local callback = function ()
+    print("here")
+    signalLuaBridge_0.Play()
+end
+
+function init()
+    local duration = signalLuaBridge_0.GetDuration()
+    print("init:"..duration)
+    signalLuaBridge_0.Play()
+end
+init()
+
+function startFunc()
+    signalLuaBridge_0.Pause()
+    signalLuaBridge_0.Delay(callback,3000)
+    print("startFunc")
+end
+
+function test1Func()
+    signalLuaBridge_0.SendMessage(">>>> message from Lua")
+    print("test1Func")
+end
+
+function test3Func()
+    print("test3Func:"..count)
+    
+    if count<2 then
+        signalLuaBridge_0.SetTime(16.5)
+    end
+    count = count+1
+    
+end

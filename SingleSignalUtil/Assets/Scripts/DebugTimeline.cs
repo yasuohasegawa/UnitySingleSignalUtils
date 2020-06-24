@@ -7,9 +7,20 @@ public class DebugTimeline : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TestTimelineController.GetInstance().OnSignalTriggered += (TestSignal signal) =>
+        if(TestTimelineController.GetInstance() != null)
         {
-            Debug.Log(signal.name);
-        };
+            TestTimelineController.GetInstance().OnSignalTriggered += (TestSignal signal) =>
+            {
+                Debug.Log(signal.name);
+            };
+        }
+
+        if (TestLuaTimelineController.GetInstance() != null)
+        {
+            TestLuaTimelineController.GetInstance().OnSignalTriggered += (TestSignal signal) =>
+            {
+                Debug.Log(signal.name);
+            };
+        }
     }
 }

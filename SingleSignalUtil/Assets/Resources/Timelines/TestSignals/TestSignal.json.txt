@@ -2,12 +2,12 @@
 {
 "signalID":"StartAnimation",
 "time":5,
-"functionName":"testNumber"
+"functionName":"startFunc"
 },
 {
 "signalID":"Test1",
 "time":10,
-"functionName":""
+"functionName":"test1Func"
 },
 {
 "signalID":"Test2",
@@ -17,7 +17,7 @@
 {
 "signalID":"Test3",
 "time":20,
-"functionName":"testMul"
+"functionName":"test3Func"
 },
 {
 "signalID":"AnimationEnd",
